@@ -1,0 +1,4 @@
+mean_cg_it,std_cg_it,mean_residuals,std_residuals,mean_runtime,std_runtime,mean_approx_rank,mean_preconditioner_time
+4.5,0.5,"[4.09435005e-02 8.95076454e-07 8.12388784e-09 7.39453127e-11
+ 5.36626053e-13            nan]","[0.00000000e+00 3.32373471e-08 1.75651026e-09 3.51733122e-11
+ 2.94302964e-13            nan]",19627.936900615692,593.7870147979545,100.0,306.735026717186
