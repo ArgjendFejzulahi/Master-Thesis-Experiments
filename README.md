@@ -13,7 +13,9 @@ It contains the core modules and scripts required to replicate the experiments a
 
 To run the code, follow these steps:
 
-### 1. Create and Activate a Virtual Environment (Recommended)
+### 1. Navigate to the root directory
+
+### 2. Create and Activate a Virtual Environment (Recommended)
 
 <details>
 <summary>Windows</summary>
@@ -22,7 +24,7 @@ To run the code, follow these steps:
 python -m venv venv
 venv\Scripts\activate
 ````
-### 2. Install Python requirements.txt
+### 3. Install Python requirements.txt
 
 ```bash
 pip install -r requirements.txt
