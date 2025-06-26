@@ -17,8 +17,7 @@ To run the code, follow these steps:
 
 ### 2. Create and Activate a Virtual Environment (Recommended)
 
-<details>
-<summary>Windows</summary>
+
 
 ```bash
 python -m venv venv
