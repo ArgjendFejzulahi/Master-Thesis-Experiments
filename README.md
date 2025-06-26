@@ -21,6 +21,15 @@ To run the code, follow these steps:
 ```bash
 python -m venv venv
 venv\Scripts\activate
+````
+### 2. Install Python requirements.txt
+
+```bash
+pip install -r requirements.txt
+
+````
+
+
 
 
 
