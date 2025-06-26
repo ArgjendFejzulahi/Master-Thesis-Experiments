@@ -1,21 +1,26 @@
-﻿# Masterthesis-Experiments
-## This is the github respository from my masterthesis: "Preconditioning Large Scale Linear Systems: A Randomized Numerical Linear Algebra Approach". It containts the important modules and scripts to replicate the experiments from the thesis
+# Masterthesis-Experiments
 
-To be able to run the code: 
+## Overview
 
-1. Create and Activate a Virtual Environment (Recommended) -> % perplexity add the comand
-   python -m venv venv
-   venv\Scripts\activate
+This is the GitHub repository from my master’s thesis:  
+**"Preconditioning Large Scale Linear Systems: A Randomized Numerical Linear Algebra Approach"**.
 
-3. Install Python Requirements -> perplexity add the command
-   pip install -r requirements.txt
+It contains the core modules and scripts required to replicate the experiments and results from the thesis.
 
+---
 
+## Setup Instructions
 
-# Core Moduels
-## The core modules to be used are 
-### Nystroem/nystroem.py which containts the (adaptive) randomized Nyström approximation.
+To run the code, follow these steps:
 
-### Inverse_EIT/customJac.py a custom Gauss-Newton solver integratable into the PyEIT package. 
+### 1. Create and Activate a Virtual Environment (Recommended)
+
+<details>
+<summary>Windows</summary>
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+
 
 
