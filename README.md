@@ -19,8 +19,10 @@ To run the code, follow these steps:
 
 
 ```bash
+pyenv install 3.11.2    # install 3.11.2
+pyenv local 3.11.2
 python -m venv venv
-source venv/Scripts/activate machen
+source venv/Scripts/activate
 ````
 ### 3. Install Python requirements.txt
 
