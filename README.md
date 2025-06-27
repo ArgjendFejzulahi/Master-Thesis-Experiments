@@ -85,7 +85,7 @@ python -m Inverse_EMT.test_P_optimality.py
 
 ### The thesis builds on two python modules. The Nyström module containing the nyström approximation algorithm in (Nystroem/nystroem.py). And the custom Gauss-Newton-Nyström PCG solver for the PyEIT packages (Inverse_EIT/customJac.py). We would like to quickly introduce the user to the functionality. 
 
-#### Build a nyström preconditioner: 
+### Build a nyström preconditioner: 
 
 ```
     np.random.seed(42)
@@ -109,5 +109,31 @@ python -m Inverse_EMT.test_P_optimality.py
     P_new = nys.preconditioner() #gets overwritten
 
 ```
+
+### Custom Gauss-Newton-Nyström PCG (customJac.py)
+
+#### Extension of pyeit.eit.jac.JAC: Inherits and extends functionality from PyEIT’s standard Jacobian-based solver. Uses CG method instead of LU. Has the option to construct a randomized nyström preconditioner on the fly and solve the subproblem with Nyström-PCG. The function iside is called gn_custom() (Gauss-Newton-custom) since the authors use gn(). 
+
+````
+# .... simulate EIT conductivity (see script eit_preconditioned.py/eit_non_preconditioned.py)
+# .... solve Forward model EIT where mesh_obj, protocol_obj are generated
+mu = 1e-7 # regularization parameter
+if_preconditioner = True # such that nyström preconditioner is used
+eit = CustomJAC(mesh_obj, protocol_obj) # set up class
+eit.setup(lamb=mu, perm=1, jac_normalized=True)
+
+# You can change nyström approximation parameters within the attributes of the class
+custom_jac_solver.start_rank = 200 # start rank of adaptive algorithm
+custom_jac_solver.max_rank = 1000 # max rank
+custom_jac_solver.tau_param = 35 # tau parameter
+
+# run custom Gauss-Newton-Nyström PCG 
+s = eit.gn_custom(v=v1, verbose=False, gtol=0.001, maxiter=1, preconditioner=if_preconditioner)
+
+# extract cg info
+num_it = eit.cg_iterations
+res = eit.residuals
+
+
 
 
