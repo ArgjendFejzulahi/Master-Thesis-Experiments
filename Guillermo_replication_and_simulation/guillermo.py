@@ -44,11 +44,11 @@ pcg_time_mean = []
 cg_time_std = []
 pcg_time_std = []
 
-mu_vals = [(10**i) for i in np.linspace(3, -5, 30)]
+mu_vals = [(10**i) for i in np.linspace(3, -3, 30)]
 K_sym_op = aslinearoperator(X_sym)
 
 max_l = round(X_sym.shape[0] * 0.4)
-mu_vals = [(10**i) for i in np.linspace(3, -5, 30)] #mu values we iterate over for regularization path
+mu_vals = [(10**i) for i in np.linspace(3, -4, 30)] #mu values we iterate over for regularization path
 counter = 0
 for mu in mu_vals:
     print("This is step: {counter}")
