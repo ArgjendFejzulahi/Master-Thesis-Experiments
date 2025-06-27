@@ -81,6 +81,8 @@ python -m Inverse_EMT.eit_preconditioned
 The outputs are for i.e. mu=  ```1e-7``` : ```reconstruction_non_preconditioned_mu_1e-07.png```;  ```reconstruction__preconditioned_mu_1e-07.png ```;  ```EIT_results_cg_mu_1e-07.csv ```;  ```EIT_results_nyst_pcg_mu_1e-07.csv ```
 The notebook for visualization:  ```Analysis_Results_EIT_Experiment.ipynb ```
 
+---
+
 ### Section 4.4 Optimality of the Preconditioner: eit_non_preconditioned.py; test_P_optimality.py
 
 This script runs the experiment on the optimal preconditioner for each regularization parameter. Given a regularization parameter and an array of mesh sizes, this experiment calculates the iteration number and time per mesh size. 
@@ -93,6 +95,7 @@ python -m Inverse_EMT.test_P_optimality.py
 The outputs is e.g. for  ```1e-7 ```:  ```results_P_optimality_test_mu_1e-07.csv ``` (see in the thesis which ones were tested)
 The notebook for visualization:  ```Analysis_Optimal_Preconditioner.ipynb ```
 
+---
 
 ## Modules and Functions
 
