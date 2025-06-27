@@ -39,7 +39,7 @@ Here are the commands to run the specific experiments. The numbering corresponds
 You can find the parameters and their descriptions for each experiment at the beginning of every script mentioned here. The current default parameters are set so that the code can easily run on your local machine. To replicate the experiments, you will also find the parameters at the beginning of the respective scripts for the EIT experiments. The experiments for the Guillermo dataset use the default settings.
 
 
-### Section 4.1 Replicating Reults from Machine Learning Applications: guillermo.py
+### Section 4.1 Replicating Reults from Machine Learning Applications: `guillermo.py`
 
 This experiment replicates the results from the original paper on the Nyström preconditioner using the Guillermo dataset. The main parameter in this script is the number of workers, since the script computes the full regularization path. See more details in Section 4.1.
 
@@ -53,7 +53,7 @@ The Notebook for visualization:  ```Analysis_Results_Guillermo.ipynb ```
 
 ----
 
-### Section 4.2 Condition Number estiomation: condition_number_monte_carlo_parallel.py
+### Section 4.2 Condition Number estiomation: `condition_number_monte_carlo_parallel.py`
 
 This experiment runs multiple trials in parallel, constructs a Nyström preconditioner, calculates the condition number, and saves the results. The script uses two regularization parameters, mu1 and mu2, which are left at their default values as in the thesis.
 Run the code: 
@@ -67,7 +67,7 @@ The Notebook for visualization:  ```Analysis_Condition_Number_Guillermo_MC.ipynb
 
 ---
 
-### Section 4.3 Solving the Inverse Conductivity Problem with Nyström PCG: eit_non_preconditioned.py; eit_preconditioned.py
+### Section 4.3 Solving the Inverse Conductivity Problem with Nyström PCG: `eit_non_preconditioned.py`; `eit_preconditioned.py`
 
 These two scripts run the EIT experiment, record the convergence, and plot the reconstructed conductivity. They are separated due to runtime and memory requirements. This enables the user to run them in parallel if more than one compute node is available. The parameters and their explanations can be found at the beginning of the scripts. Also, only one regularization parameter can be set at a time. The experiments were carried out for large dimensions, so computational capacity was limited.
 
@@ -85,7 +85,7 @@ The notebook for visualization:  ```Analysis_Results_EIT_Experiment.ipynb ```
 
 ---
 
-### Section 4.4 Optimality of the Preconditioner: eit_non_preconditioned.py; test_P_optimality.py
+### Section 4.4 Optimality of the Preconditioner: `eit_non_preconditioned.py`; `test_P_optimality.py`
 
 This script runs the experiment on the optimal preconditioner for each regularization parameter. Given a regularization parameter and an array of mesh sizes, this experiment calculates the iteration number and time per mesh size. 
 Note: This script contains its own custom functions because different convergence requirements must be met (see Section 4.3 for more details). Therefore, this section includes a custom CG solver and a PyEIT solver.
