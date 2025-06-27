@@ -63,7 +63,7 @@ for mu in mu_vals:
     K_mu_op = K_sym_op + aslinearoperator(mu * eye(X_sym.shape[0]))
 
     def trial_run(_):
-        print("Trial number: {_}")
+        print(f"Trial number: {_}")
         nys.adaptive_approximation(10, max_l, 35)
         P_nys = nys.preconditioner()
         
