@@ -1,7 +1,6 @@
 """ parameters:   """
 no_workers = 4 # number of workers to run experiments in parallel
 max_trials = 20 # Number of trials
-mu_vals = [(10**i) for i in np.linspace(3, -5, 30)] #mu values we iterate over for regularization path
 
 """                """
 
@@ -49,7 +48,7 @@ mu_vals = [(10**i) for i in np.linspace(3, -5, 30)]
 K_sym_op = aslinearoperator(X_sym)
 
 max_l = round(X_sym.shape[0] * 0.4)
-
+mu_vals = [(10**i) for i in np.linspace(3, -5, 30)] #mu values we iterate over for regularization path
 counter = 0
 for mu in mu_vals:
     print("This is step: {counter}")
