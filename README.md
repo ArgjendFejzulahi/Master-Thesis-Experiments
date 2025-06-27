@@ -81,7 +81,33 @@ python -m Inverse_EMT.test_P_optimality.py
 #### The notebook for visualization: Analysis_Optimal_Preconditioner.ipynb
 
 
+## Modules and Functions
 
+### The thesis builds on two python modules. The Nyström module containing the nyström approximation algorithm in (Nystroem/nystroem.py). And the custom Gauss-Newton-Nyström PCG solver for the PyEIT packages (Inverse_EIT/customJac.py). We would like to quickly introduce the user to the functionality. 
 
+#### Build a nyström preconditioner: 
+
+```
+    np.random.seed(42)
+    n = 100;  X = np.random.randn(n, n)
+    # ensure symmetry
+    A_mat = X @ X.T; mu = 1e-5 regularization param
+
+    # Define LinearOperator from the matrix
+    def matvec(v):
+        return A_mat @ v
+    A = LinearOperator(shape=(n, n), matvec=matvec, dtype=A_mat.dtype)
+
+    nys = Nyström(A, mu)
+    r = 20 # low-rank
+    nys.approximation(r)
+    P = nys.preconditioner() #get preconditioner
+
+    # Adaptive algorithm
+    l0 = 10; lmax = 50; tau = 35
+    nys.adaptive_approximation(l0, lmax, tau)
+    P_new = nys.preconditioner() #gets overwritten
+
+```
 
 
