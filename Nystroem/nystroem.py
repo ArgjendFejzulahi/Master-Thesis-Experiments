@@ -4,6 +4,10 @@ from scipy.sparse.linalg import aslinearoperator, LinearOperator, eigsh
 import numpy as np
 
 
+""" This module containts randomized algorithms specifically the randomized nyström approximation and preconditioner.
+
+"""
+
 def randomPowerErrEst(A, U, Lambda, q): 
     n, d = np.shape(A)
     g = np.random.randn(n,1)
@@ -35,7 +39,10 @@ class Nyström:
         self.Lambda = None 
         
     def approximation(self, r): 
-        """Generate and store the Nyström approximation components U and Lambda."""
+        """Generate and store the Nyström approximation components U and Lambda.
+        
+        r: low-rank to approximate: """
+        
         Omega = np.random.randn(self.n, r)
         Omega, _ = qr(Omega, mode='economic')
         
@@ -57,7 +64,12 @@ class Nyström:
         self.Lambda = Lambda
 
     def adaptive_approximation(self, l0: int, lmax: int, tau: float):
-        """Adaptive approximation method to compute and store U and Lambda."""
+        
+        """Adaptive approximation method to compute and store U and Lambda.
+        l0: initital start rank
+        lmax: maximum rank
+        tau: specific parameter (see Masterthesis)"""
+        
         tol_err = tau * self.mu
         tol_rat = (tau * self.mu) / 10
         Y = np.empty((self.n, 0))
@@ -144,3 +156,52 @@ class Nyström:
 
         return P_inv
 
+if __name__ == "__main__":
+    
+    from scipy.sparse.linalg import LinearOperator
+    import numpy as np
+
+    # Define a test symmetric positive definite matrix (A = X @ X.T)
+    np.random.seed(42)
+    n = 100  # dimension
+    X = np.random.randn(n, n)
+    A_mat = X @ X.T
+
+    # Define LinearOperator from the matrix
+    def matvec(v):
+        return A_mat @ v
+
+    A = LinearOperator(shape=(n, n), matvec=matvec, dtype=A_mat.dtype)
+
+    # Regularization parameter
+    mu = 1e-5
+
+    # Create Nyström object
+    nys = Nyström(A, mu)
+
+    # Test standard approximation
+    r = 20
+    print(f"\nTesting approximation with rank {r}...")
+    nys.approximation(r)
+    print("U shape:", nys.U.shape)
+    print("Lambda:", nys.Lambda)
+
+    # Test adaptive approximation
+    l0 = 10
+    lmax = 50
+    tau = 35
+    print(f"\nTesting adaptive approximation with l0={l0}, lmax={lmax}, tau={tau}...")
+    nys.adaptive_approximation(l0, lmax, tau)
+    print("Adaptive U shape:", nys.U.shape)
+    print("Adaptive Lambda:", nys.Lambda)
+
+    # Test preconditioner
+    try:
+        print("\nTesting preconditioner...")
+        P = nys.preconditioner()
+        # Apply the preconditioner to a random vector
+        x = np.random.randn(n)
+        Px = P @ x
+        print("Preconditioner application successful. Shape of Px:", Px.shape)
+    except Exception as e:
+        print("Error during preconditioner test:", e)

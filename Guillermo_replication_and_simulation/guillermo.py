@@ -1,36 +1,37 @@
+""" parameters:   """
+no_workers = 4 # number of workers to run experiments in parallel
+max_trials = 20 # Number of trials
+mu_vals = [(10**i) for i in np.linspace(3, -5, 30)] #mu values we iterate over for regularization path
+
+"""                """
+
 import sys
 import os
-
-experiments_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(experiments_dir)
-
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import time
+import openml
 import numpy as np
 import pandas as pd
 from scipy.io import arff
 from scipy.sparse import eye
 from scipy.sparse.linalg import aslinearoperator, cg
 import concurrent.futures
-
 from Nystroem.nystroem import * 
 
 
-data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'guillermo_data.arff')
-data = arff.loadarff(data_path)
+
+# load dateset from openml
+dataset = openml.datasets.get_dataset("guillermo")  # or get_dataset("guillermo")
+X, y, categorical_indicator, attribute_names = dataset.get_data(target=dataset.default_target_attribute)
 print("data succesfully imported")
 
-data = pd.DataFrame(data[0])
-y  = np.array(data["class"], dtype = np.float32)
-X = data.drop('class', axis=1).to_numpy()
+y  = y.to_numpy(dtype=np.float32)
+X = X.to_numpy()
 n,d = np.shape(X)
 X_sym =  ( 1/n ) * X.T @ X
 rhs = (1/n) *  X.T @ y
 
-print("The shape of X_sym")
-print(X_sym.shape)
-print("The shape of rhs")
-print(rhs.shape)
-
+# calculate effective dimension
 def calc_d_eff(A, mu) -> int:
     dim = A.shape[0]
     return round(np.trace(A @ np.linalg.pinv(A + mu * np.eye(dim))))
@@ -58,6 +59,7 @@ for mu in mu_vals:
     times_cg = []
     times_pcg = []
     
+    #set up nyström preconditioner
     nys = Nyström(K_sym_op, mu)
     K_mu_op = K_sym_op + aslinearoperator(mu * eye(X_sym.shape[0]))
 
@@ -76,8 +78,8 @@ for mu in mu_vals:
         
         return nys.U.shape[1], end_cg - start_cg, end_pcg - start_pcg
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = list(executor.map(trial_run, range(20)))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=no_workers) as executor:
+        results = list(executor.map(trial_run, range(max_trials)))
 
     # Correct unpacking
     ranks, times_cg_list, times_pcg_list = zip(*results)

@@ -1,20 +1,3 @@
-from __future__ import absolute_import, division, print_function
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import pyeit.eit.jac as jac
-import pyeit.mesh as mesh
-from pyeit.eit.fem import EITForward
-from pyeit.eit.interp2d import sim2pts
-from pyeit.mesh.shape import thorax
-import pyeit.eit.protocol as protocol
-from pyeit.mesh.wrapper import PyEITAnomaly_Circle
-from Inverse_EMT.customJac import *
-import time
-import random
-
-
 """"--------- Choose parameters : ---------- """
 
 # Parameters used in the thesis ! 
@@ -33,6 +16,25 @@ mesh_size = 0.06
 if_preconditioner = True
 
 """ -------------------------"""
+
+from __future__ import absolute_import, division, print_function
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import pyeit.eit.jac as jac
+import pyeit.mesh as mesh
+from pyeit.eit.fem import EITForward
+from pyeit.eit.interp2d import sim2pts
+from pyeit.mesh.shape import thorax
+import pyeit.eit.protocol as protocol
+from pyeit.mesh.wrapper import PyEITAnomaly_Circle
+from Inverse_EMT.customJac import *
+import time
+import random
+
+
+
 
 print("Running EIT script: WITH preconditioner")
 

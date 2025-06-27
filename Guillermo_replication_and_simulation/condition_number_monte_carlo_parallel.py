@@ -1,42 +1,40 @@
+"""" parameters """
+
+max_trials = 200   #number simulations
+mu1 = 0.1          #mu_paremeter for simulation 1
+mu2 = 0.01         #mu_parameter for simulation 2
+no_workers = 3     # number of workers for parallel exec.
+
+""" """
+
 import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-experiments_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(experiments_dir)
-
-flag = False
 from Nystroem.nystroem import *
-
 from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 import numpy as np
 from scipy.io import arff
 import time
+import openml
 
 
-data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'guillermo_data.arff')
-
-
-data = arff.loadarff(data_path)
+# load dateset from openml
+dataset = openml.datasets.get_dataset("guillermo")  # or get_dataset("guillermo")
+X, y, categorical_indicator, attribute_names = dataset.get_data(target=dataset.default_target_attribute)
 print("data succesfully imported")
-data = pd.DataFrame(data[0])
-X = data.drop('class', axis=1).to_numpy()
+
+y  = y.to_numpy(dtype=np.float32)
+X = X.to_numpy()
 n,d = np.shape(X)
 X_sym =  ( 1/n ) * X.T @ X
-f = (1/n) *  X.T @ y
-
-# Mock data example for testing
-#X = np.random.randn(100, 100)
-#X_sym = X.T @ X
-#mu_vals = [(10**i) for i in np.linspace(3, -5, 20)]
+rhs = (1/n) *  X.T @ y
 
 start = time.time()
 K_sym_op = aslinearoperator(X_sym)
 max_l = round(X_sym.shape[0] * 0.4)
-max_trials = 200
 
-mu1 = 0.1
-mu2 = 0.01
 
 # Function to estimate condition numbers
 def estimate_condition_numbers(mu, max_trials):
@@ -53,7 +51,7 @@ def estimate_condition_numbers(mu, max_trials):
         cond = cond_2_sparse(P @ K_mu_op)
         return t, cond
 
-    with ThreadPoolExecutor(max_workers = 3) as executor:
+    with ThreadPoolExecutor(max_workers = no_workers) as executor:
         results = list(executor.map(compute_trial, range(max_trials + 1)))
 
     for t, cond in results:
@@ -88,5 +86,4 @@ mu2_df.to_csv(mu2_filename, index=False)
 print(f"Saved mu2 results to {mu2_filename}")
 
 end = time.time()
-
 print("time for the computation: " + str(end - start))
