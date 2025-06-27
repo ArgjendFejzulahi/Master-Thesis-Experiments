@@ -41,8 +41,8 @@ Here are the commands to run the specific experiments. The numbering is to be un
 ````
 python Guillermo_replication_and_simulation\guillermo.py
 ````
-The output is: guillermo_replication_results.xlsx
-The Notebook for visualization: Analysis_Results_Guillermo.ipynb
+#### The output is: guillermo_replication_results.xlsx
+#### The Notebook for visualization: Analysis_Results_Guillermo.ipynb
 
 ### 4.2 Condition Number estiomation: condition_number_monte_carlo_parallel.py
 
@@ -53,8 +53,8 @@ Run the code:
 python Guillermo_replication_and_simulation\condition_number_monte_carlo_parallel.py
 ````
 
-The output are: guillermo_condition_numbers_mu_0.1.csv, guillermo_condition_numbers_mu_0.01.csv since mu1 = 0.1, mu2= 0.01. The name will be adjusted by the choice of parameter. 
-The Notebook for visualization: Analysis_Condition_Number_Guillermo_MC.ipynb
+#### The output are: guillermo_condition_numbers_mu_0.1.csv, guillermo_condition_numbers_mu_0.01.csv since mu1 = 0.1, mu2= 0.01. The name will be adjusted by the choice of parameter. 
+#### The Notebook for visualization: Analysis_Condition_Number_Guillermo_MC.ipynb
 
 
 ### 4.3 Solving the Inverse Conductivity Problem with Nyström PCG: eit_non_preconditioned.py; eit_preconditioned.py
@@ -68,16 +68,18 @@ python -m Inverse_EMT.eit_non_preconditioned
 ````
 python -m Inverse_EMT.eit_preconditioned
 ````
-The outputs are for i.e. mu=1e-7: reconstruction_non_preconditioned_mu_1e-07.png; reconstruction__preconditioned_mu_1e-07.png; EIT_results_cg_mu_1e-07.csv; EIT_results_nyst_pcg_mu_1e-07.csv
-The notebook for visualization: Analysis_Results_EIT_Experiment.ipynb
+#### The outputs are for i.e. mu=1e-7: reconstruction_non_preconditioned_mu_1e-07.png; reconstruction__preconditioned_mu_1e-07.png; EIT_results_cg_mu_1e-07.csv; EIT_results_nyst_pcg_mu_1e-07.csv
+#### The notebook for visualization: Analysis_Results_EIT_Experiment.ipynb
 
-### ### 4.3 Optimality of the Preconditioner: eit_non_preconditioned.py; test_P_optimality.py
+### 4.3 Optimality of the Preconditioner: eit_non_preconditioned.py; test_P_optimality.py
 
 ### This script runs the experiment on the optimal preconditioner per regularization parameter. Given a regularization parameter and a array of mesh_sizes this experiment calculates. the iteration number and time per meshsize. Note: This script containts its own custom functions due to the fact that different requirements for convergence must be met (see Section 4.3 for more details). Therefore this section containts a custom CG-solver and PyEIT solver. 
 
 ````
 python -m Inverse_EMT.test_P_optimality.py
 ````
+#### The outputs is e.g. for 1e-7: results_P_optimality_test_mu_1e-07.csv (see in the thesis which ones were tested)
+#### The notebook for visualization: Analysis_Optimal_Preconditioner.ipynb
 
 
 
