@@ -32,7 +32,10 @@ pip install -r requirements.txt
 
 ## Run experiments
 
-Here are the commands to run the specific experiments. The numbering is to be understood as the specific section thereby experiment in the masterthesis. The results are all saved in the results folder. There you can find Jupyter Notebooks for visualizaton as well as instructions on how to use them.  Make sure Jupyter Notebooks is installed. You can find the parameters and their description of the specific experiments at the beginning of every script we mention here. The current default parameters are set such that the code can easily run on your local machine. To replicate the experiments you will find the parameter as well in the beginning of the respective script for the EIT experiments. The Experiments for the guillermo dataset have the default settings. 
+Here are the commands to run the specific experiments. The numbering corresponds to the specific sections and experiments in the master’s thesis. All results are saved in the `results` folder. There, you can find Jupyter Notebooks for visualization as well as instructions on how to use them. Make sure Jupyter Notebook is installed.
+
+You can find the parameters and their descriptions for each experiment at the beginning of every script mentioned here. The current default parameters are set so that the code can easily run on your local machine. To replicate the experiments, you will also find the parameters at the beginning of the respective scripts for the EIT experiments. The experiments for the Guillermo dataset use the default settings.
+
 
 ### Section 4.1 Replicating Reults from Machine Learning Applications: guillermo.py
 
@@ -43,6 +46,8 @@ python Guillermo_replication_and_simulation\guillermo.py
 ````
 The output is:  ```guillermo_replication_results.xlsx ```
 The Notebook for visualization:  ```Analysis_Results_Guillermo.ipynb ```
+
+----
 
 ### Section 4.2 Condition Number estiomation: condition_number_monte_carlo_parallel.py
 
