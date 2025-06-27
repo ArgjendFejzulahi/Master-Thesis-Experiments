@@ -128,7 +128,7 @@ The thesis builds on two Python modules. The Nyström module contains the Nystr�
 
 ### Custom Gauss-Newton-Nyström PCG (customJac.py)
 
-#### Extension of pyeit.eit.jac.JAC: Inherits and extends functionality from PyEIT’s standard Jacobian-based solver. Uses CG method instead of LU. Has the option to construct a randomized nyström preconditioner on the fly and solve the subproblem with Nyström-PCG. The function iside is called gn_custom() (Gauss-Newton-custom) since the authors use gn(). 
+Extension of pyeit.eit.jac.JAC (see https://github.com/eitcom/pyEIT) : Inherits and extends functionality from PyEIT’s standard Jacobian-based solver. Uses CG method instead of LU. Has the option to construct a randomized nyström preconditioner on the fly and solve the subproblem with Nyström-PCG. The function iside is called gn_custom() (Gauss-Newton-custom) since the authors use gn(). 
 
 ````
 # .... simulate EIT conductivity (see script eit_preconditioned.py/eit_non_preconditioned.py)
