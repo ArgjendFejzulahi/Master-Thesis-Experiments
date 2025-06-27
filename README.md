@@ -39,7 +39,9 @@ You can find the parameters and their descriptions for each experiment at the be
 
 ### Section 4.1 Replicating Reults from Machine Learning Applications: guillermo.py
 
-#### This experiment replicates the reults from the original paper of the nyström preconditioner on the guillermo dataset. The parameter in this script is the number of workers since the script computes the full regularization path; See more detals in Section 4.1. Run the code: 
+This experiment replicates the results from the original paper on the Nyström preconditioner using the Guillermo dataset. The main parameter in this script is the number of workers, since the script computes the full regularization path. See more details in Section 4.1.
+
+Run the code:
 
 ````
 python Guillermo_replication_and_simulation\guillermo.py
@@ -51,7 +53,7 @@ The Notebook for visualization:  ```Analysis_Results_Guillermo.ipynb ```
 
 ### Section 4.2 Condition Number estiomation: condition_number_monte_carlo_parallel.py
 
-This experiment runs multiple trials in parallel. Constructs a nyström preconditioner, calculates the condition number and saves the results. The script is defined for two regularization parameters mu1, mu2. They are left as their default values like in the thesis. 
+This experiment runs multiple trials in parallel, constructs a Nyström preconditioner, calculates the condition number, and saves the results. The script uses two regularization parameters, mu1 and mu2, which are left at their default values as in the thesis.
 Run the code: 
 
 ````
@@ -61,10 +63,13 @@ python Guillermo_replication_and_simulation\condition_number_monte_carlo_paralle
 The output are: ```guillermo_condition_numbers_mu_0.1.csv```, ```guillermo_condition_numbers_mu_0.01.csv``` since mu1 = `0.1`, mu2=`0.01`. The name will be adjusted by the choice of parameter. 
 The Notebook for visualization:  ```Analysis_Condition_Number_Guillermo_MC.ipynb ```
 
+---
 
 ### Section 4.3 Solving the Inverse Conductivity Problem with Nyström PCG: eit_non_preconditioned.py; eit_preconditioned.py
 
-These two scripts run the EIT experiment, record the convergence and plot the reconstructed conductivity. They are seperated due to runtime capacities and memory requierments. This enables the user to run them in parallel if more than one compute node is available. The parameters can be found in the beginning of the scripts and also an explanation. Also only one regularizaton parameter at a time can be set up. The experiments were carried out for large dimensions so computational capacity was limited.Run the script as module: 
+These two scripts run the EIT experiment, record the convergence, and plot the reconstructed conductivity. They are separated due to runtime and memory requirements. This enables the user to run them in parallel if more than one compute node is available. The parameters and their explanations can be found at the beginning of the scripts. Also, only one regularization parameter can be set at a time. The experiments were carried out for large dimensions, so computational capacity was limited.
+
+Run the script as a module:
 
 ````
 python -m Inverse_EMT.eit_non_preconditioned
@@ -78,7 +83,9 @@ The notebook for visualization:  ```Analysis_Results_EIT_Experiment.ipynb ```
 
 ### Section 4.4 Optimality of the Preconditioner: eit_non_preconditioned.py; test_P_optimality.py
 
-### This script runs the experiment on the optimal preconditioner per regularization parameter. Given a regularization parameter and a array of mesh_sizes this experiment calculates. the iteration number and time per meshsize. Note: This script containts its own custom functions due to the fact that different requirements for convergence must be met (see Section 4.3 for more details). Therefore this section containts a custom CG-solver and PyEIT solver. 
+This script runs the experiment on the optimal preconditioner for each regularization parameter. Given a regularization parameter and an array of mesh sizes, this experiment calculates the iteration number and time per mesh size. 
+Note: This script contains its own custom functions because different convergence requirements must be met (see Section 4.3 for more details). Therefore, this section includes a custom CG solver and a PyEIT solver.
+
 
 ````
 python -m Inverse_EMT.test_P_optimality.py
@@ -89,7 +96,7 @@ The notebook for visualization:  ```Analysis_Optimal_Preconditioner.ipynb ```
 
 ## Modules and Functions
 
-### The thesis builds on two python modules. The Nyström module containing the nyström approximation algorithm in (Nystroem/nystroem.py). And the custom Gauss-Newton-Nyström PCG solver for the PyEIT packages (Inverse_EIT/customJac.py). We would like to quickly introduce the user to the functionality. 
+The thesis builds on two Python modules. The Nyström module contains the Nyström approximation algorithm (`Nystroem/nystroem.py`), and the custom Gauss-Newton-Nyström PCG solver is designed for the PyEIT package (`Inverse_EIT/customJac.py`). We would like to quickly introduce the user to their functionality.
 
 ### Build a nyström preconditioner: 
 
@@ -129,9 +136,13 @@ eit = CustomJAC(mesh_obj, protocol_obj) # set up class
 eit.setup(lamb=mu, perm=1, jac_normalized=True)
 
 # You can change nyström approximation parameters within the attributes of the class
-custom_jac_solver.start_rank = 200 # start rank of adaptive algorithm
-custom_jac_solver.max_rank = 1000 # max rank
-custom_jac_solver.tau_param = 35 # tau parameter
+eit.start_rank = 200 # start rank of adaptive algorithm
+eit.max_rank = 1000 # max rank
+eit.tau_param = 35 # tau parameter
+
+#You can set parameters for conjugate gradient i.e.
+eit.cg_tol = 1e-10 # detault
+eit.cg_max_iter = 350 # default
 
 # run custom Gauss-Newton-Nyström PCG 
 s = eit.gn_custom(v=v1, verbose=False, gtol=0.001, maxiter=1, preconditioner=if_preconditioner)
