@@ -24,6 +24,8 @@ class CustomJAC(JAC):
         self.start_rank = 100
         self.max_rank = 4000
         self.tau_param = 35
+        self.cg_tol = 1e-10
+        self.cg_max_iter = 350
         
         self.cg_iterations = []
         self.residuals = [] 
@@ -79,11 +81,11 @@ class CustomJAC(JAC):
                     self.time_preconditioner = time.time() - start
                     
                     P = nys.preconditioner()
-                    d_k, cg_info = cg(A_lam, b, M = P, maxiter = 350 ,callback = callback_counter, rtol = 1e-10) 
+                    d_k, cg_info = cg(A_lam, b, M = P, maxiter = self.cg_max_iter ,callback = callback_counter, rtol = self.cg_tol) 
                     self.U_shape = nys.U.shape
                 else: 
                     j_w_j = jac.T @ jac 
-                    d_k, cg_info = cg(A_lam, b, maxiter=350,  callback = callback_counter, rtol = 1e-10)
+                    d_k, cg_info = cg(A_lam, b, maxiter=self.cg_max_iter,  callback = callback_counter, rtol = self.cg_tol)
                 
                 self.cg_iterations.append(callback_counter.iterations)  
                 
