@@ -91,7 +91,7 @@ python -m Inverse_EMT.test_P_optimality.py
     np.random.seed(42)
     n = 100;  X = np.random.randn(n, n)
     # ensure symmetry
-    A_mat = X @ X.T; mu = 1e-5 regularization param
+    A_mat = X @ X.T; mu = 1e-5 #regularization param
 
     # Define LinearOperator from the matrix
     def matvec(v):
