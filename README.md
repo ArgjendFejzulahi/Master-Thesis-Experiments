@@ -20,7 +20,7 @@ To run the code, follow these steps:
 
 ```bash
 python -m venv venv
-venv\Scripts\activate
+source venv/Scripts/activate machen
 ````
 ### 3. Install Python requirements.txt
 
