@@ -97,7 +97,8 @@ results = {
     "mean_preconditioner_time": np.mean(preconditioner_times),
 }
 
-pd.DataFrame([results]).to_csv(f"results/EIT_results_nyst_pcg_mu_{mu_str}.csv", index=False)
+mesh_str = f"{mesh_size:.3f}".replace('.', '_')
+pd.DataFrame([results]).to_csv(f"results/EIT_results_nyst_pcg_mu_{mu_str}_h_{mesh_str}.csv", index=False)
 
 # Plot
 ds_last = sim2pts(pts, tri, np.real(ds))
@@ -112,6 +113,7 @@ for i, e in enumerate(mesh_obj.el_pos):
 axes[1].set_aspect("equal")
 axes[1].set_title("Reconstructed Δ Conductivities WITH Preconditioner")
 fig.colorbar(axes[1].collections[0], ax=axes.ravel().tolist())
-plt.savefig(f'results/reconstruction_preconditioned_mu_{mu_str}.png', dpi=96)
+
+plt.savefig(f'results/reconstruction_preconditioned_mu_{mu_str}_mesh_{mesh_str}.png', dpi=96)
 plt.close()
 

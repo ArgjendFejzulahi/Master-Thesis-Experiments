@@ -29,7 +29,7 @@ no_trials = 5 #number of trials to repeat the experiment
 mu = 1e-5 # regularization parameter
 mu_str = f"{mu:.0e}"
 no_electrodes = 16
-mesh_size = 0.05
+mesh_size = 0.06
 if_preconditioner = False
 """ -------------------------"""
 
@@ -83,7 +83,8 @@ results = {
     "std_runtime": np.std(nonprec_times, ddof=1),
 }
 
-pd.DataFrame([results]).to_csv(f"results/EIT_results_cg_mu_{mu_str}.csv", index=False)
+mesh_str = f"{mesh_size:.3f}".replace('.', '_')
+pd.DataFrame([results]).to_csv(f"results/EIT_results_cg_mu_{mu_str}_h_{mesh_str}.csv", index=False)
 
 # Plot
 ds_last = sim2pts(pts, tri, np.real(ds))
@@ -98,6 +99,8 @@ for i, e in enumerate(mesh_obj.el_pos):
 axes[1].set_aspect("equal")
 axes[1].set_title("Reconstructed Δ Conductivities WITHOUT Preconditioner")
 fig.colorbar(axes[1].collections[0], ax=axes.ravel().tolist())
-plt.savefig(f'results/reconstruction_non_preconditioned_mu_{mu_str}.png', dpi=96)
+
+plt.savefig(f'results/reconstruction_non_preconditioned_mu_{mu_str}_mesh_{mesh_str}.png', dpi=96)
 plt.close()
+
 
