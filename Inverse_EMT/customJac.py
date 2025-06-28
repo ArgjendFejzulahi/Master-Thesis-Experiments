@@ -60,7 +60,10 @@ class CustomJAC(JAC):
                 jac, v0 = self.fwd.compute_jac(x0)
                 r0 = v - v0
 
-                j_w_j = aslinearoperator(jac.T @ jac)
+                jac_lin_op = aslinearoperator(jac)
+                j_w_j = jac_lin_op.T @ jac_lin_op
+                
+                #j_w_j = aslinearoperator(jac.T @ jac)
                 reg = aslinearoperator(lamb * eye(jac.shape[1]))
                 A_lam  = j_w_j + reg
                 
