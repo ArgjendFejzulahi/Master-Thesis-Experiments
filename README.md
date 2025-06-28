@@ -14,10 +14,8 @@ It contains the core modules and scripts required to replicate the experiments a
 To run the code, follow these steps:
 
 ### 1. *Navigate to the root directory* (Important) 
-### 1. <span style="color:red">Navigate to the root directory</span>
 
 ### 2. Create and Activate a Virtual Environment (Recommended)
-
 
 ```bash
 pyenv install 3.11.2    # install 3.11.2
@@ -25,6 +23,16 @@ pyenv local 3.11.2
 python -m venv venv
 source venv/Scripts/activate
 ````
+
+If this doesn't work you might use conda. It is improtant that the specific python version can be used. Newer versions i.e. python 3.12.X might cause dependencie issues. Note that conda must be downloaded if not available. 
+
+```
+conda create -n masterthesis-env python=3.11 -y
+conda activate masterthesis-env
+```
+
+
+
 ### 3. Install Python requirements.txt
 
 ```bash
