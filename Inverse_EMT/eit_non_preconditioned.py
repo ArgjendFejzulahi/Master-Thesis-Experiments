@@ -100,7 +100,7 @@ axes[1].set_aspect("equal")
 axes[1].set_title("Reconstructed Δ Conductivities WITHOUT Preconditioner")
 fig.colorbar(axes[1].collections[0], ax=axes.ravel().tolist())
 
-plt.savefig(f'results/reconstruction_non_preconditioned_mu_{mu_str}_mesh_{mesh_str}.png', dpi=96)
+plt.savefig(f'results/reconstruction_non_preconditioned_mu_{mu_str}_h_{mesh_str}.png', dpi=96)
 plt.close()
 
 
