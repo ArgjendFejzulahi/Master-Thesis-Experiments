@@ -49,7 +49,7 @@ pip install -r requirements.txt
 
 ## Run experiments
 
-Here are the commands to run the specific experiments. The numbering corresponds to the specific sections and experiments in the master’s thesis. All results are saved in the `results` folder. There, you can find Jupyter Notebooks for visualization as well as instructions on how to use them. Make sure Jupyter Notebook is installed. Depending on your system you might need to change th directory `results` for the specific visualizations. Caution when choosing regularization parameters since you may overwrite the established results from the thesis.
+Here are the commands to run the specific experiments. The numbering corresponds to the specific sections and experiments in the master’s thesis. All results are saved in the `results` folder. There, you can find Jupyter Notebooks for visualization as well as instructions on how to use them. Make sure Jupyter Notebook is installed. Depending on your system you might need to change th directory `results` for the specific visualizations. 
 
 You can find the parameters and their descriptions for each experiment at the beginning of every script mentioned here. The current default parameters are set so that the code can easily run on your local machine. To replicate the experiments, you will also find the parameters at the beginning of the respective scripts for the EIT experiments. The experiments for the Guillermo dataset use the default settings.
 
