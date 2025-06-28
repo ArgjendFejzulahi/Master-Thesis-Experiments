@@ -18,13 +18,19 @@ To run the code, follow these steps:
 ### 2. Create and Activate a Virtual Environment (Recommended)
 
 ```bash
-pyenv install 3.11.2    # install 3.11.2
-pyenv local 3.11.2
-python -m venv venv
+pyenv install 3.11.2       # Install Python 3.11.2
+pyenv local 3.11.2         # Set local Python version to 3.11.2
+python -m venv venv        # Create a virtual environment named 'venv'
+
+# Activate the virtual environment
+# On Windows:
 source venv/Scripts/activate
+# On macOS/Linux:
+# source venv/bin/activate
+
 ````
 
-If this doesn't work you might use conda. It is improtant that the specific python version can be used. Newer versions i.e. python 3.12.X might cause dependencie issues. Note that conda must be downloaded if not available. 
+If this doesn't work you might use conda. It is improtant that the specific python version can be used. Newer versions i.e. python 3.12.X might cause dependencie issues. Note that conda distribution must be downloaded if not available (https://www.anaconda.com/download)
 
 ```
 conda create -n masterthesis-env python=3.11 -y
@@ -43,7 +49,7 @@ pip install -r requirements.txt
 
 ## Run experiments
 
-Here are the commands to run the specific experiments. The numbering corresponds to the specific sections and experiments in the master’s thesis. All results are saved in the `results` folder. There, you can find Jupyter Notebooks for visualization as well as instructions on how to use them. Make sure Jupyter Notebook is installed.
+Here are the commands to run the specific experiments. The numbering corresponds to the specific sections and experiments in the master’s thesis. All results are saved in the `results` folder. There, you can find Jupyter Notebooks for visualization as well as instructions on how to use them. Make sure Jupyter Notebook is installed. Depending on your system you might need to change th directory `results` for the specific visualizations.
 
 You can find the parameters and their descriptions for each experiment at the beginning of every script mentioned here. The current default parameters are set so that the code can easily run on your local machine. To replicate the experiments, you will also find the parameters at the beginning of the respective scripts for the EIT experiments. The experiments for the Guillermo dataset use the default settings.
 
