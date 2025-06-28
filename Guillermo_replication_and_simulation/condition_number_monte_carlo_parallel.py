@@ -3,7 +3,7 @@
 max_trials = 200   #number simulations
 mu1 = 0.1          #mu_paremeter for simulation 1
 mu2 = 0.01         #mu_parameter for simulation 2
-no_workers = 3     # number of workers for parallel exec.
+no_workers = 2     # number of workers for parallel exec.
 
 """ """
 
@@ -12,7 +12,9 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from Nystroem.nystroem import *
-from concurrent.futures import ThreadPoolExecutor
+#from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor as Executor
+
 import pandas as pd
 import numpy as np
 from scipy.io import arff
@@ -51,7 +53,8 @@ def estimate_condition_numbers(mu, max_trials):
         cond = cond_2_sparse(P @ K_mu_op)
         return t, cond
 
-    with ThreadPoolExecutor(max_workers = no_workers) as executor:
+    #with ThreadPoolExecutor(max_workers = no_workers) as executor:
+    with Executor(max_workers = no_workers) as executor:
         results = list(executor.map(compute_trial, range(max_trials + 1)))
 
     for t, cond in results:

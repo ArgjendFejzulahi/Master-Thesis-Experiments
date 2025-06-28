@@ -1,7 +1,9 @@
 """ parameters:   """
-no_workers = 4 # number of workers to run experiments in parallel
+no_workers = 2 # number of workers to run experiments in parallel
 max_trials = 20 # Number of trials
-
+mu_start_val = 3 #i.e. we start with mu=10^mu_start_val 
+mu_end_val = 5 # i.e. we end at 10^-mu_end_val 
+no_mu = 30       # i.e. how many mu values between mu_start_val and mu_end_val we produce
 """                """
 
 import sys
@@ -11,7 +13,6 @@ import time
 import openml
 import numpy as np
 import pandas as pd
-from scipy.io import arff
 from scipy.sparse import eye
 from scipy.sparse.linalg import aslinearoperator, cg
 import concurrent.futures
@@ -22,20 +23,21 @@ from Nystroem.nystroem import *
 # load dateset from openml
 dataset = openml.datasets.get_dataset("guillermo")  # or get_dataset("guillermo")
 X, y, categorical_indicator, attribute_names = dataset.get_data(target=dataset.default_target_attribute)
-print("data succesfully imported")
+print("data succesfully from openml imported")
 
 y  = y.to_numpy(dtype=np.float32)
 X = X.to_numpy()
 n,d = np.shape(X)
-X_sym =  ( 1/n ) * X.T @ X
+X_sym =  ( 1/n ) * X.T @ X 
 rhs = (1/n) *  X.T @ y
 
-# calculate effective dimension
-def calc_d_eff(A, mu) -> int:
-    dim = A.shape[0]
-    return round(np.trace(A @ np.linalg.pinv(A + mu * np.eye(dim))))
 
-# Result storage
+# calculate effective dimension
+def calc_d_eff(A, mu) -> float:
+    eigvals = np.linalg.eigvalsh(A)
+    return float(np.sum(eigvals / (eigvals + mu)))
+
+
 effective_dimension = []
 rank_mean = []
 rank_std = []
@@ -44,16 +46,19 @@ pcg_time_mean = []
 cg_time_std = []
 pcg_time_std = []
 
-mu_vals = [(10**i) for i in np.linspace(3, -3, 30)]
+
 K_sym_op = aslinearoperator(X_sym)
 
 max_l = round(X_sym.shape[0] * 0.4)
-mu_vals = [(10**i) for i in np.linspace(3, -4, 30)] #mu values we iterate over for regularization path
+mu_vals = [(10**i) for i in np.linspace(mu_start_val, -mu_start_val, no_mu)] #mu values we iterate over for regularization path
 counter = 0
 for mu in mu_vals:
-    print("This is step: {counter}")
-    effective_dimension.append(calc_d_eff(X_sym, mu))
+    print(f"Calculation for mu= {mu}")
+    d_eff = calc_d_eff(X_sym, mu)
+    effective_dimension.append(d_eff)
     
+    print("The effective dimension is: ")
+    print(d_eff)
     rank = []
     times_cg = []
     times_pcg = []
@@ -79,6 +84,8 @@ for mu in mu_vals:
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=no_workers) as executor:
         results = list(executor.map(trial_run, range(max_trials)))
+        
+    print("-------------------------------------------")
 
     # Correct unpacking
     ranks, times_cg_list, times_pcg_list = zip(*results)
