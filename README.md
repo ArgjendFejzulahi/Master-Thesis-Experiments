@@ -13,7 +13,7 @@ It contains the core modules and scripts required to replicate the experiments a
 
 To run the code, follow these steps:
 
-### 1. Navigate to the root directory
+### 1. ***Navigate to the root directory*** (Important) 
 
 ### 2. Create and Activate a Virtual Environment (Recommended)
 
